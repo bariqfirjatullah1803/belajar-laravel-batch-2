@@ -18,22 +18,27 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function(){
+Route::get('/dashboard', function () {
     return view('dashboard');
 });
 
-Route::get('/table', function(){
+Route::get('/table', function () {
     return view('table');
 });
 
-Route::get('/chart', function(){
+Route::get('/chart', function () {
     return view('chart');
 });
 
+Auth::routes();
 
-Route::get('/student', [StudentController::class, 'index'])->name('student.index');
-Route::get('/student/{student}/edit', [StudentController::class, 'edit'])->name('student.edit');
-Route::put('/student/{student}/update', [StudentController::class, 'update'])->name('student.update');
-Route::delete('/student/{student}/delete',[StudentController::class, 'destroy'])->name('student.destroy');
-Route::get('/student/create', [StudentController::class, 'create'])->name('student.create');
-Route::post('/student', [StudentController::class,'store'])->name('student.store');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::middleware(['auth', 'role:superadmin'])->group(function () {
+    Route::get('/student', [StudentController::class, 'index'])->name('student.index');
+    Route::get('/student/{student}/edit', [StudentController::class, 'edit'])->name('student.edit');
+    Route::put('/student/{student}/update', [StudentController::class, 'update'])->name('student.update');
+    Route::delete('/student/{student}/delete', [StudentController::class, 'destroy'])->name('student.destroy');
+    Route::get('/student/create', [StudentController::class, 'create'])->name('student.create');
+    Route::post('/student', [StudentController::class, 'store'])->name('student.store');
+});

@@ -7,7 +7,8 @@ use App\Models\Student;
 
 class StudentController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $students = Student::all();
 
         return view('student.index', compact('students'));
@@ -33,7 +34,8 @@ class StudentController extends Controller
         return redirect()->route('student.index');
     }
 
-    public function edit(Student $student){
+    public function edit(Student $student)
+    {
 
         return view('student.edit', compact('student'));
     }
